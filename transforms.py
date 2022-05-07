@@ -20,8 +20,8 @@ reflect1 = partition(np.array([[1, 2, 0],
                                [0, 1, 0],
                                [0, 0, 1]]))
 
-rotation = lambda theta: partition(np.array([[ np.cos(theta), np.sin(theta), 0], 
-                                             [-np.sin(theta), np.cos(theta), 0],
+rotation = lambda theta: partition(np.array([[ np.cos(theta),-np.sin(theta), 0], 
+                                             [ np.sin(theta), np.cos(theta), 0],
                                              [             0,             0, 1]]))
 
 shearexample = partition(np.array([[1, 2, 0],

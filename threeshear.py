@@ -2,7 +2,7 @@ import numpy as np
 from PIL import Image, ImageDraw
 import sys
 import math, time
-from transforms import move, shear1, shear2, shear3
+from transforms import move, shear1, shear2, shear3, rotation
 
 sttime = time.perf_counter()
 vec_round = np.vectorize(round)
@@ -51,17 +51,22 @@ def matrix_to_img_slow(npdata):
 #data = vec_round(move(1000, 1000).dot(img_to_matrix(numpydata)))
 data = img_to_matrix(numpydata)
 
-raw = vec_round(move(1000, 1000).dot(data))
+#raw = vec_round(move(1000, 1000).dot(data))
+raw = data
 result1 = vec_round(shear1(theta).dot(raw))
 result2 = vec_round(shear2(theta).dot(result1))
 result3 = vec_round(shear3(theta).dot(result2))
 
-img0 = Image.fromarray()
-img1 = Image.fromarray(matrix_to_img(result1).astype('uint8'), 'RGB')
-img2 = Image.fromarray(matrix_to_img(result2).astype('uint8'), 'RGB')
-imgfinal = Image.fromarray(matrix_to_img(result3).astype('uint8'), 'RGB')
+img0 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(raw))).astype('uint8'), 'RGB')
+img1 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result1))).astype('uint8'), 'RGB')
+img2 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result2))).astype('uint8'), 'RGB')
+imgfinal = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result3))).astype('uint8'), 'RGB')
 
+img0.save('original.png')
 img1.save('shear1.png') # Save image
 img2.save('shear2.png')
 imgfinal.save('shear3.png')
+
+singletrans = matrix_to_img(vec_round(move(1000, 1000).dot(rotation(theta)).dot(raw)))
+Image.fromarray(singletrans.astype('uint8'), 'RGB').save('rotationmatrix.png')
 print(time.perf_counter()-sttime)
