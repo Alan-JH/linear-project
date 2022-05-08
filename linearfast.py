@@ -10,11 +10,13 @@ vec_round = np.vectorize(round)
 name = sys.argv[1]
 img = Image.open(name)
 numpydata = np.asarray(img)
+numpydata = np.swapaxes(numpydata,0,1) # convert row column to xy
 
 theta = 180 * math.pi / 180
 # Matrix transform x, y, 1, r, g, b
 #transformation = transforms.rotation(theta)
-transformation = transforms.shearexample
+#transformation = transforms.shearexample
+transformation = transforms.colorshift2
 
 def img_to_matrix(npdata):
     i = np.arange(npdata.shape[0])
@@ -52,6 +54,8 @@ def matrix_to_img_slow(npdata):
 data = img_to_matrix(numpydata)
 
 result = matrix_to_img(transformation.dot(data))
+result = np.swapaxes(result,0,1) # convert xy to row column
+
 
 PIL_image = Image.fromarray(result.astype('uint8'), 'RGB')
 PIL_image.save('result.png') # Save image

@@ -24,7 +24,7 @@ rotation = lambda theta: partition(np.array([[ np.cos(theta),-np.sin(theta), 0],
                                              [ np.sin(theta), np.cos(theta), 0],
                                              [             0,             0, 1]]))
 
-shearexample = partition(np.array([[1, 2, 0],
+shearexample = partition(np.array([[1, 1, 0],
                                    [0, 1, 0],
                                    [0, 0, 1]]))
 
@@ -37,5 +37,23 @@ shear2 = lambda theta: partition(np.array([[            1, 0, 0],
 shear3 = lambda theta: partition(np.array([[1,   -np.tan(theta/2), 0],
                                            [0,                  1, 0],
                                            [0,                  0, 1]]))
+
+colorshift1 = np.array([
+    [1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0.25, 0],
+    [0, 0, 0, 0, 0, 0.25]
+])
+
+colorshift2 = np.array([
+    [1, 0, 0, 0, 0, 0],
+    [0, 1, 0, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0],
+    [-0.1, 0, 0, 0, 1, 0],
+    [-0.1, 0, 0, 0, 0, 1]
+])
 
 #rgb = 

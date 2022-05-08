@@ -22,7 +22,7 @@ def img_to_matrix(npdata):
     return out.reshape(-1, out.shape[-1]).T
 
 def matrix_to_img(npdata):
-    arr = np.ones([3000, 3000, 3]) * 255 # Create a white canvas
+    arr = np.ones([2700, 2700, 3]) * 255 # Create a white canvas
     npdata = vec_round(npdata)
     arr[npdata[0], npdata[1]] = npdata[3:].T
     return arr
@@ -33,9 +33,9 @@ images = []
 for i in range(0, 360, 10):
     theta = i * math.pi / 180
     # Matrix transform x, y, 1, r, g, b
-    transformation = transfroms.rotation(theta)
+    transformation = transforms.rotation(theta)
 
-    result = matrix_to_img(transformation.dot(data))
+    result = matrix_to_img(transforms.move(1250, 1250).dot(transformation).dot(data))
 
     PIL_image = Image.fromarray(result.astype('uint8'), 'RGB')
     images.append(PIL_image)

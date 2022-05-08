@@ -10,6 +10,7 @@ vec_round = np.vectorize(round)
 name = sys.argv[1]
 img = Image.open(name)
 numpydata = np.asarray(img)
+numpydata = np.swapaxes(numpydata,0,1) # Convert row column to xy
 
 theta = 35 * math.pi / 180
 # Matrix transform x, y, 1, r, g, b
@@ -57,16 +58,16 @@ result1 = vec_round(shear1(theta).dot(raw))
 result2 = vec_round(shear2(theta).dot(result1))
 result3 = vec_round(shear3(theta).dot(result2))
 
-img0 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(raw))).astype('uint8'), 'RGB')
-img1 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result1))).astype('uint8'), 'RGB')
-img2 = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result2))).astype('uint8'), 'RGB')
-imgfinal = Image.fromarray(matrix_to_img(vec_round(move(1000, 1000).dot(result3))).astype('uint8'), 'RGB')
+img0 = Image.fromarray(np.swapaxes(matrix_to_img(vec_round(move(1000, 1000).dot(raw))), 0, 1).astype('uint8'), 'RGB')
+img1 = Image.fromarray(np.swapaxes(matrix_to_img(vec_round(move(1000, 1000).dot(result1))), 0, 1).astype('uint8'), 'RGB')
+img2 = Image.fromarray(np.swapaxes(matrix_to_img(vec_round(move(1000, 1000).dot(result2))), 0, 1).astype('uint8'), 'RGB')
+imgfinal = Image.fromarray(np.swapaxes(matrix_to_img(vec_round(move(1000, 1000).dot(result3))), 0, 1).astype('uint8'), 'RGB')
 
 img0.save('original.png')
 img1.save('shear1.png') # Save image
 img2.save('shear2.png')
 imgfinal.save('shear3.png')
 
-singletrans = matrix_to_img(vec_round(move(1000, 1000).dot(rotation(theta)).dot(raw)))
+singletrans = np.swapaxes(matrix_to_img(vec_round(move(1000, 1000).dot(rotation(theta)).dot(raw))), 0, 1)
 Image.fromarray(singletrans.astype('uint8'), 'RGB').save('rotationmatrix.png')
 print(time.perf_counter()-sttime)
