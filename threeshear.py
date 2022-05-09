@@ -12,7 +12,7 @@ img = Image.open(name)
 numpydata = np.asarray(img)
 numpydata = np.swapaxes(numpydata,0,1) # Convert row column to xy
 
-theta = 35 * math.pi / 180
+theta = -35 * math.pi / 180
 # Matrix transform x, y, 1, r, g, b
 
 
